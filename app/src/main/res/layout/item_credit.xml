@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- Add necessary views to display information about the credit -->
+        <ImageView
+            android:id="@+id/ivCreditProfileImage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvCreditName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Actor Name"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/tvCreditCharacter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Character Name"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@android:color/darker_gray" />
+
+            <!-- Add any other views as needed for displaying additional credit information -->
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
