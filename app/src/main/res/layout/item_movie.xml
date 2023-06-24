@@ -33,6 +33,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Movie name"
+            android:textColor="?android:textColorPrimary"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -46,6 +47,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Release Date"
+            android:textColor="?android:textColorSecondary"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toBottomOf="@+id/tvMovieName" />
@@ -54,9 +56,9 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#757575"
+            android:backgroundTint="?attr/colorButtonNormal"
             android:text="BOOK"
-            android:textColor="@color/white"
+            android:textColor="?android:textColorPrimary"
             app:cornerRadius="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

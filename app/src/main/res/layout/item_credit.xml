@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="Actor Name"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@android:color/black" />
+                android:textColor="?android:textColorPrimary" />
 
             <TextView
                 android:id="@+id/tvCreditCharacter"
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="Character Name"
                 android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="?android:textColorSecondary" />
 
             <!-- Add any other views as needed for displaying additional credit information -->
         </LinearLayout>

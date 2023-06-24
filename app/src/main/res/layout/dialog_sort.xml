@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sort By"
+        android:textColor="?android:textColorPrimary"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -23,20 +24,23 @@
             android:id="@+id/radioButtonNames"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dates Ascending" />
+            android:text="Dates Ascending"
+            android:textColor="?android:textColorSecondary" />
 
         <RadioButton
             android:id="@+id/radioButtonDates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dates Descending" />
+            android:text="Dates Descending"
+            android:textColor="?android:textColorSecondary" />
     </RadioGroup>
 
     <Button
-        android:backgroundTint="#757575"
         android:id="@+id/buttonSort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#757575"
         android:text="Sort"
+        android:textColor="?android:textColorPrimary"
         app:cornerRadius="4dp" />
 </LinearLayout>

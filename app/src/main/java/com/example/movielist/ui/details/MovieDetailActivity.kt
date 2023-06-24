@@ -128,6 +128,7 @@ class MovieDetailActivity : AppCompatActivity() {
                     similarMoviesAdapter.notifyDataSetChanged()
                 }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
