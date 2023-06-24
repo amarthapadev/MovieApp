@@ -22,16 +22,21 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:title="Movie Details">
 
-            <ImageView
-                android:id="@+id/collapsingToolbarImageView"
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_launcher_background"
-                android:minHeight="220dp"
-                android:scaleType="fitXY"
-                android:transitionName="movieImageTransition"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.7" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/collapsingToolbarImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="220dp"
+                    android:scaleType="fitXY"
+                    android:transitionName="movieImageTransition"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.7" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

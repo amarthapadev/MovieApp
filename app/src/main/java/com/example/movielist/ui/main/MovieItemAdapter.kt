@@ -1,6 +1,7 @@
 package com.example.movielist.ui.main
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,14 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.movielist.R
 import com.example.movielist.ui.details.MovieDetailActivity
 import com.example.movielist.ui.model.Movie
+import com.facebook.shimmer.ShimmerFrameLayout
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -29,6 +34,7 @@ class MovieItemAdapter(private val dataSet: ArrayList<Movie>) :
         val tvMovieName: TextView
         val tvReleaseDate: TextView
         val ivPoster: ImageView
+        val shimmerLayout: ShimmerFrameLayout
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
@@ -37,14 +43,38 @@ class MovieItemAdapter(private val dataSet: ArrayList<Movie>) :
             tvMovieName = view.findViewById(R.id.tvMovieName)
             tvReleaseDate = view.findViewById(R.id.tvReleaseDate)
             ivPoster = view.findViewById(R.id.imageView)
+            shimmerLayout = view.findViewById(R.id.shimmerLayoutPoster)
         }
 
         fun bind(movie: Movie) {
 
-            // Load the image using Glide or any other image loading library
             Glide.with(itemView.context)
                 .load(movie.getPosterUrl())
-                .apply(RequestOptions().placeholder(R.drawable.ic_launcher_background))
+                .placeholder(R.drawable.ic_launcher_background)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        shimmerLayout.stopShimmer() // Stop the shimmer animation if the image loading fails
+                        shimmerLayout.setShimmer(null) // Optionally, clear the shimmer effect completely
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        shimmerLayout.stopShimmer() // Stop the shimmer animation when the image is loaded
+                        shimmerLayout.setShimmer(null) // Optionally, clear the shimmer effect completely
+                        return false
+                    }
+                })
                 .into(ivPoster)
 
             tvMovieName.text = movie.name

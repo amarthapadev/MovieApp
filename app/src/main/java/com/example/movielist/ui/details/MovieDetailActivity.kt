@@ -1,5 +1,6 @@
 package com.example.movielist.ui.details
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.movielist.R
 import com.example.movielist.data.source.database.BookmarkMovieDao
 import com.example.movielist.data.source.database.MovieDao
@@ -85,6 +90,31 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
 
                     Glide.with(this)
                         .load(movieDetails.getBackDropUrl())
+                        .placeholder(R.drawable.ic_launcher_background)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                binding.shimmerViewContainer.stopShimmer() // Stop the shimmer animation if the image loading fails
+                                binding.shimmerViewContainer.setShimmer(null) // Optionally, clear the shimmer effect completely
+                                return false
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                binding.shimmerViewContainer.stopShimmer() // Stop the shimmer animation when the image is loaded
+                                binding.shimmerViewContainer.setShimmer(null) // Optionally, clear the shimmer effect completely
+                                return false
+                            }
+                        })
                         .into(movieImage)
 
                     collapsingToolbar.title = movieDetails.title
