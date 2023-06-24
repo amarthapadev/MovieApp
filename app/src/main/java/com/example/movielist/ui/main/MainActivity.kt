@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioGroup
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun getBookmarkedMovies(): List<Movie> = withContext(Dispatchers.IO) {
-        
+
         return@withContext mainViewModel.getBookMarkedMovies()
     }
 
@@ -98,7 +99,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvMainActivity.adapter = movieItemAdapter
 
+        binding.progressCircular.visibility = View.VISIBLE
+
         mainViewModel.movieList.observe(this) { list ->
+
+            binding.progressCircular.visibility = View.GONE
 
             MovieListHolder.movieList.clear()
             MovieListHolder.movieList.addAll(list)
