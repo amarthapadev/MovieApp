@@ -43,8 +43,6 @@ class MainRepositoryImpl @Inject constructor(
 
         val list = bookmarkMovieDao.getAllMovies().map { it.id }
 
-        Log.d("Main Repository", list.toString())
-
         val movies = bookmarkMovieDao.getMoviesById(list)
 
         emit(movies.toExternal())

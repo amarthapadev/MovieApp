@@ -1,6 +1,9 @@
 package com.example.movielist.ui.main
 
 import android.app.Dialog
+import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -43,6 +47,12 @@ class MainActivity : AppCompatActivity() {
         val swapList: ArrayList<Movie> = ArrayList()
         val movieList: ArrayList<Movie> = ArrayList()
         val bookmarkedMovies: ArrayList<Movie> = ArrayList()
+    }
+
+    fun Context.isDarkThemeOn(): Boolean {
+
+        return resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
     }
 
     private suspend fun getBookmarkedMovies(): List<Movie> = withContext(Dispatchers.IO) {
