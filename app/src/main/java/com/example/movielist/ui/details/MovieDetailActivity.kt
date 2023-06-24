@@ -60,7 +60,7 @@ class MovieDetailActivity : AppCompatActivity() {
         val collapsingToolbar = findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        
+
         val position = intent.getIntExtra("position", -1)
         movieId = intent.getIntExtra("movieId", -1)
 
@@ -134,6 +134,7 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         menuInflater.inflate(R.menu.menu_detail, menu)
+
         return true
     }
 
@@ -170,6 +171,27 @@ class MovieDetailActivity : AppCompatActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val list = MainActivity.MovieListHolder.bookmarkedMovies.filter {
+
+            it.movieId == movieId
+        }
+
+        isBookmarked = list.isNotEmpty()
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+
+        if (isBookmarked)
+            menu.findItem(R.id.action_bookmark).setIcon(R.drawable.bookmark_1)
+        else
+            menu.findItem(R.id.action_bookmark).setIcon(R.drawable.bookmark_2)
+
+        return super.onPrepareOptionsMenu(menu)
     }
 
     @MainThread
