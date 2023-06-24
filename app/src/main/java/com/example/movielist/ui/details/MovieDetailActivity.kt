@@ -3,6 +3,9 @@ package com.example.movielist.ui.details
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.view.View.OnTouchListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -27,7 +30,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
 
     @Inject
     lateinit var bookmarkMovieDao: BookmarkMovieDao
@@ -107,6 +110,8 @@ class MovieDetailActivity : AppCompatActivity() {
             creditsAdapter = CreditsAdapter(creditList)
             binding.rvCredits.adapter = creditsAdapter
 
+            binding.rvCredits.setOnTouchListener(this)
+
             detailViewModel.getCredits(movieId = movieId).observe(this) { credits ->
 
                 creditList.clear()
@@ -119,6 +124,8 @@ class MovieDetailActivity : AppCompatActivity() {
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             similarMoviesAdapter = SimilarMoviesAdapter(similarMovieList)
             binding.rvSimilarMovies.adapter = similarMoviesAdapter
+
+            binding.rvSimilarMovies.setOnTouchListener(this)
 
             detailViewModel.getSimilarMovies(movieId = movieId)
                 .observe(this) { similarMovies ->
@@ -222,5 +229,12 @@ class MovieDetailActivity : AppCompatActivity() {
             menu.findItem(R.id.action_bookmark).setIcon(R.drawable.bookmark_2)
 
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+
+        binding.collapsingToolbar.dispatchTouchEvent(event)
+
+        return super.onTouchEvent(event)
     }
 }
