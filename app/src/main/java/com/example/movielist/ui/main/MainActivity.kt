@@ -46,19 +46,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun getBookmarkedMovies(): List<Movie> = withContext(Dispatchers.IO) {
-
-        val bookmarks = mainViewModel.getBookMarkedMovies()
-
-        val ids = ArrayList<Int>()
-        for (bookmark in bookmarks)
-            ids.add(bookmark.id)
-
-        val list = MovieListHolder.movieList.filter {
-
-            ids.contains(it.movieId)
-        }
-
-        return@withContext list
+        
+        return@withContext mainViewModel.getBookMarkedMovies()
     }
 
     private fun handleSortOption(selectedOptionId: Int) {

@@ -1,6 +1,5 @@
 package com.example.movielist.data.source.database.entity.mapper
 
-import com.example.movielist.data.source.database.entity.BookmarkMovieEntity
 import com.example.movielist.data.source.database.entity.MovieCreditEntity
 import com.example.movielist.data.source.database.entity.MovieDetailEntity
 import com.example.movielist.data.source.database.entity.MovieEntity
@@ -10,7 +9,6 @@ import com.example.movielist.data.source.network.models.credits.Cast
 import com.example.movielist.data.source.network.models.details.Details
 import com.example.movielist.data.source.network.models.nowPlaying.Result
 import com.example.movielist.data.source.network.models.reviews.Reviews
-import com.example.movielist.ui.model.BookmarkedMovie
 import com.example.movielist.ui.model.Credit
 import com.example.movielist.ui.model.Movie
 import com.example.movielist.ui.model.MovieDetail
@@ -43,7 +41,9 @@ fun List<Result>.toEntity() = map(Result::toEntity)
 fun MovieDetailEntity.toExternal() = MovieDetail(
     title = title,
     overview = overview,
-    backDropPath = backdropPath
+    backDropPath = backdropPath,
+    releaseDate = releaseDate,
+    posterPath = posterPath
 )
 
 @JvmName("movieDetailEntityToExternal")
@@ -54,7 +54,9 @@ fun Details.toEntity() = MovieDetailEntity(
     movieId = id,
     overview = overview,
     title = title,
-    backdropPath = backdrop_path
+    backdropPath = backdrop_path,
+    releaseDate = release_date,
+    posterPath = poster_path
 )
 
 @JvmName("detailsToInternal")

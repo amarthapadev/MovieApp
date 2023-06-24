@@ -8,5 +8,7 @@ class MovieDetailEntity(
     @PrimaryKey val movieId: Int,
     val overview: String,
     val title: String,
-    val backdropPath: String
+    val backdropPath: String,
+    val releaseDate: String,
+    val posterPath: String
 )

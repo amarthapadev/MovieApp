@@ -3,8 +3,7 @@ package com.example.movielist.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.example.movielist.data.repository.MainRepository
-import com.example.movielist.data.source.database.entity.BookmarkMovieEntity
-import com.example.movielist.ui.model.BookmarkedMovie
+import com.example.movielist.ui.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.catch
@@ -20,9 +19,10 @@ class MainViewModel @Inject constructor(
     val movieList = mainRepository.fetchMovieList(1)
         .catch { exception ->
             // Handle error case
+            exception.printStackTrace()
         }.asLiveData()
 
-    suspend fun getBookMarkedMovies() : List<BookmarkMovieEntity> {
+    suspend fun getBookMarkedMovies(): List<Movie> {
 
         return mainRepository.fetchBookmarkedMovies().flatMapConcat { it.asFlow() }.toList()
     }

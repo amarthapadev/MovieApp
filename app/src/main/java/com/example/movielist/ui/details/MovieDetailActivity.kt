@@ -3,16 +3,16 @@ package com.example.movielist.ui.details
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.movielist.R
 import com.example.movielist.data.source.database.BookmarkMovieDao
+import com.example.movielist.data.source.database.MovieDao
 import com.example.movielist.data.source.database.entity.BookmarkMovieEntity
+import com.example.movielist.data.source.database.entity.MovieEntity
 import com.example.movielist.databinding.ActivityMovieDetailBinding
 import com.example.movielist.ui.main.MainActivity
 import com.example.movielist.ui.model.Credit
@@ -32,6 +32,9 @@ class MovieDetailActivity : AppCompatActivity() {
     @Inject
     lateinit var bookmarkMovieDao: BookmarkMovieDao
 
+    @Inject
+    lateinit var movieDao: MovieDao
+
     private lateinit var binding: ActivityMovieDetailBinding
 
     private val detailViewModel: DetailViewModel by viewModels()
@@ -44,6 +47,8 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private var movieId = -1
     private var movieName = ""
+    private var releaseDate = ""
+    private var posterUrl = ""
     private var isBookmarked = false
 
     private val job = Job()
@@ -83,6 +88,8 @@ class MovieDetailActivity : AppCompatActivity() {
                     binding.tvSynopsis.text = movieDetails.overview
 
                     movieName = movieDetails.title
+                    releaseDate = movieDetails.releaseDate
+                    posterUrl = movieDetails.posterPath
                 }
             }
 
@@ -121,14 +128,6 @@ class MovieDetailActivity : AppCompatActivity() {
                     similarMoviesAdapter.notifyDataSetChanged()
                 }
         }
-
-
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                // Back is pressed... Finishing the activity
-                finish()
-            }
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -142,6 +141,13 @@ class MovieDetailActivity : AppCompatActivity() {
 
         return when (item.itemId) {
 
+            android.R.id.home -> {
+
+                onBackPressedDispatcher.onBackPressed()
+
+                true
+            }
+
             R.id.action_bookmark -> {
 
                 isBookmarked = if (!isBookmarked) {
@@ -151,6 +157,29 @@ class MovieDetailActivity : AppCompatActivity() {
                     scope.launch(Dispatchers.IO) {
 
                         bookmarkMovieDao.insertMovie(BookmarkMovieEntity(movieId, movieName))
+
+                        val bookmarkMovieIds =
+                            MainActivity.MovieListHolder.bookmarkedMovies.map { it.movieId }
+
+                        if (movieId !in bookmarkMovieIds) {
+
+                            if (movieId > 0
+                                && movieName.isNotEmpty()
+                                && releaseDate.isNotEmpty()
+                                && posterUrl.isNotEmpty()
+                            ) {
+
+                                movieDao.insertMovie(
+                                    MovieEntity(
+                                        100, // page 100 is for bookmarks
+                                        movieId,
+                                        movieName,
+                                        releaseDate,
+                                        posterUrl
+                                    )
+                                )
+                            }
+                        }
                     }
 
                     true
@@ -192,11 +221,5 @@ class MovieDetailActivity : AppCompatActivity() {
             menu.findItem(R.id.action_bookmark).setIcon(R.drawable.bookmark_2)
 
         return super.onPrepareOptionsMenu(menu)
-    }
-
-    @MainThread
-    override fun onBackPressed() {
-
-        onBackPressedDispatcher.onBackPressed()
     }
 }

@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.movielist.data.source.database.entity.BookmarkMovieEntity
+import com.example.movielist.data.source.database.entity.MovieEntity
 
 @Dao
 interface BookmarkMovieDao {
@@ -18,6 +19,9 @@ interface BookmarkMovieDao {
 
     @Query("SELECT * FROM BookmarkMovieEntity WHERE id = :movieId")
     fun getMovieById(movieId: String): BookmarkMovieEntity
+
+    @Query("SELECT * FROM MovieEntity WHERE movieId IN (:movieIds)")
+    fun getMoviesById(movieIds: List<Int>): List<MovieEntity>
 
     @Query("SELECT * FROM BookmarkMovieEntity")
     fun getAllMovies(): List<BookmarkMovieEntity>

@@ -49,9 +49,12 @@ class MovieItemAdapter(private val dataSet: ArrayList<Movie>) :
 
             tvMovieName.text = movie.name
 
-            val date = dateFormat.parse(movie.releaseDate)
+            if (movie.releaseDate.isNotEmpty()) {
 
-            tvReleaseDate.text = date?.let { humanReadableFormat.format(it) }
+                val date = dateFormat.parse(movie.releaseDate)
+
+                tvReleaseDate.text = date?.let { humanReadableFormat.format(it) }
+            }
 
             itemView.setOnClickListener {
 

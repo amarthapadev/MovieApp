@@ -3,6 +3,8 @@ package com.example.movielist.ui.model
 class MovieDetail(
     val title: String,
     val overview: String,
+    val posterPath: String,
+    val releaseDate: String,
     private val backDropPath: String,
 ) {
 

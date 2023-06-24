@@ -41,11 +41,13 @@ class MainRepositoryImpl @Inject constructor(
 
     override fun fetchBookmarkedMovies() = flow {
 
-        val list = bookmarkMovieDao.getAllMovies()
+        val list = bookmarkMovieDao.getAllMovies().map { it.id }
 
-        Log.d("Main Repository", list.size.toString())
+        Log.d("Main Repository", list.toString())
 
-        emit(bookmarkMovieDao.getAllMovies())
+        val movies = bookmarkMovieDao.getMoviesById(list)
+
+        emit(movies.toExternal())
 
     }.flowOn(ioDispatcher)
 }
