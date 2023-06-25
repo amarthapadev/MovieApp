@@ -46,7 +46,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieDetailBinding
 
-    private val detailViewModel: DetailViewModel by viewModels()
+    val detailViewModel: DetailViewModel by viewModels()
 
     private var creditList = ArrayList<Credit>()
     private var similarMovieList = ArrayList<SimilarMovie>()
