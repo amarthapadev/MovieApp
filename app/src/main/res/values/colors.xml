@@ -15,5 +15,6 @@
     <color name="dark_text_secondary">#C0C0C0</color>
     <color name="light_icon_tint">#000000</color>
     <color name="dark_icon_tint">#FFFFFF</color>
+    <color name="shimmerColor">#C2C2C2</color>
 </resources>
 

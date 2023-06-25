@@ -50,7 +50,6 @@ class MovieItemAdapter(private val dataSet: ArrayList<Movie>) :
 
             Glide.with(itemView.context)
                 .load(movie.getPosterUrl())
-                .placeholder(R.drawable.ic_launcher_background)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
                         e: GlideException?,

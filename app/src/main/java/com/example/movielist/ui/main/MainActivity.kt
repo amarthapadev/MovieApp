@@ -99,16 +99,23 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvMainActivity.adapter = movieItemAdapter
 
-        binding.progressCircular.visibility = View.VISIBLE
+        binding.rvMainActivity.visibility = View.INVISIBLE
+
+        binding.shimmerLayout.startShimmer()
 
         mainViewModel.movieList.observe(this) { list ->
 
-            binding.progressCircular.visibility = View.GONE
+            binding.shimmerLayout.apply {
+                stopShimmer()
+                visibility = View.GONE
+            }
 
             MovieListHolder.movieList.clear()
             MovieListHolder.movieList.addAll(list)
 
             movieItemAdapter.notifyDataSetChanged()
+
+            binding.rvMainActivity.visibility = View.VISIBLE
         }
 
 
