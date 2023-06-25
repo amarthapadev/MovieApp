@@ -74,6 +74,8 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        binding.shimmerLayout.startShimmer()
+
         val position = intent.getIntExtra("position", -1)
         movieId = intent.getIntExtra("movieId", -1)
 
@@ -88,9 +90,15 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
 
                 movieDetails?.let {
 
+                    binding.shimmerLayout.apply {
+                        stopShimmer()
+                        visibility = View.GONE
+                    }
+
+                    binding.cvSynopsis.visibility = View.VISIBLE
+
                     Glide.with(this)
                         .load(movieDetails.getBackDropUrl())
-                        .placeholder(R.drawable.ic_launcher_background)
                         .listener(object : RequestListener<Drawable> {
                             override fun onLoadFailed(
                                 e: GlideException?,
@@ -130,6 +138,13 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
 
                 movieReview?.let {
 
+                    binding.shimmerLayout.apply {
+                        stopShimmer()
+                        visibility = View.GONE
+                    }
+
+                    binding.cvReview.visibility = View.VISIBLE
+
                     binding.tvName.text = it.name
                     binding.tvReview.text = it.review
                 }
@@ -143,6 +158,13 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
             binding.rvCredits.setOnTouchListener(this)
 
             detailViewModel.getCredits(movieId = movieId).observe(this) { credits ->
+
+                binding.shimmerLayout.apply {
+                    stopShimmer()
+                    visibility = View.GONE
+                }
+
+                binding.rvCredits.visibility = View.VISIBLE
 
                 creditList.clear()
                 creditList.addAll(credits)
@@ -159,6 +181,14 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
 
             detailViewModel.getSimilarMovies(movieId = movieId)
                 .observe(this) { similarMovies ->
+
+                    binding.shimmerLayout.apply {
+                        stopShimmer()
+                        visibility = View.GONE
+                    }
+
+                    binding.rvSimilarMovies.visibility = View.VISIBLE
+
                     similarMovieList.clear()
                     similarMovieList.addAll(similarMovies)
 

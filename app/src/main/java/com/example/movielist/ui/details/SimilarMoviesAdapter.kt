@@ -54,7 +54,6 @@ class SimilarMoviesAdapter(private val dataSet: ArrayList<SimilarMovie>) :
 
         Glide.with(viewHolder.itemView.context)
             .load(dataSet[position].getPosterPath())
-            .placeholder(R.drawable.ic_launcher_background)
             .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
