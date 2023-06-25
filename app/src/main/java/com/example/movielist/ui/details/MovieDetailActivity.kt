@@ -1,5 +1,6 @@
 package com.example.movielist.ui.details
 
+import android.content.res.Configuration
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
@@ -7,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -72,6 +74,27 @@ class MovieDetailActivity : AppCompatActivity() {
         val collapsingToolbar = findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val isDarkThemeOn = this.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+        if (isDarkThemeOn) {
+
+            binding.collapsingToolbar.setContentScrimColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.dark_surface
+                )
+            )
+        } else {
+
+            binding.collapsingToolbar.setContentScrimColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.light_surface
+                )
+            )
+        }
 
         binding.shimmerLayout.startShimmer()
 
