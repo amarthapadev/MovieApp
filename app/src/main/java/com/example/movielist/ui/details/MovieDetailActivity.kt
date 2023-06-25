@@ -204,6 +204,11 @@ class MovieDetailActivity : AppCompatActivity() {
             detailViewModel.getSimilarMovies(movieId = movieId)
                 .observe(this) { similarMovies ->
 
+                    val movies = similarMovies.filter {
+                        
+                        it.getPosterPath().isNotEmpty()
+                    }
+
                     binding.shimmerLayout.apply {
                         stopShimmer()
                         visibility = View.GONE
@@ -212,7 +217,7 @@ class MovieDetailActivity : AppCompatActivity() {
                     binding.rvSimilarMovies.visibility = View.VISIBLE
 
                     similarMovieList.clear()
-                    similarMovieList.addAll(similarMovies)
+                    similarMovieList.addAll(movies)
 
                     similarMoviesAdapter.notifyDataSetChanged()
                 }
