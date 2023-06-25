@@ -4,9 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -26,6 +24,7 @@ import com.example.movielist.ui.main.MainActivity
 import com.example.movielist.ui.model.Credit
 import com.example.movielist.ui.model.SimilarMovie
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +34,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
+class MovieDetailActivity : AppCompatActivity() {
 
     @Inject
     lateinit var bookmarkMovieDao: BookmarkMovieDao
@@ -155,7 +154,7 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
             creditsAdapter = CreditsAdapter(creditList)
             binding.rvCredits.adapter = creditsAdapter
 
-            binding.rvCredits.setOnTouchListener(this)
+            binding.rvCredits.isNestedScrollingEnabled = false
 
             detailViewModel.getCredits(movieId = movieId).observe(this) { credits ->
 
@@ -177,7 +176,7 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
             similarMoviesAdapter = SimilarMoviesAdapter(similarMovieList)
             binding.rvSimilarMovies.adapter = similarMoviesAdapter
 
-            binding.rvSimilarMovies.setOnTouchListener(this)
+            binding.rvSimilarMovies.isNestedScrollingEnabled = false
 
             detailViewModel.getSimilarMovies(movieId = movieId)
                 .observe(this) { similarMovies ->
@@ -246,6 +245,9 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
                                         posterUrl
                                     )
                                 )
+
+                                Snackbar.make(binding.root, "Bookmarked", Snackbar.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                     }
@@ -289,12 +291,5 @@ class MovieDetailActivity : AppCompatActivity(), OnTouchListener {
             menu.findItem(R.id.action_bookmark).setIcon(R.drawable.bookmark_2)
 
         return super.onPrepareOptionsMenu(menu)
-    }
-
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-
-        binding.collapsingToolbar.dispatchTouchEvent(event)
-
-        return super.onTouchEvent(event)
     }
 }

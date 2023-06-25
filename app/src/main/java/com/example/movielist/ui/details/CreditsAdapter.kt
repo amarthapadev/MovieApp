@@ -83,18 +83,4 @@ class CreditsAdapter(private val dataSet: ArrayList<Credit>) :
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
-    /*
-    DiffUtil example
-    @Pokedex app by Skydoves
-        companion object {
-            private val diffUtil = object : DiffUtil.ItemCallback<Pokemon>() {
-
-                override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean =
-                    oldItem.name == newItem.name
-
-                override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean =
-                    oldItem == newItem
-            }
-        }
-     */
 }

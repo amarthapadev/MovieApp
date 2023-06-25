@@ -175,6 +175,8 @@ class MainActivity : AppCompatActivity() {
 
                 if (!showbookmarks) {
 
+                    binding.toolbar.title = "Bookmarks"
+
                     showbookmarks = true
 
                     item.setIcon(R.drawable.bookmark_1)
@@ -187,6 +189,8 @@ class MainActivity : AppCompatActivity() {
 
                     movieItemAdapter.notifyDataSetChanged()
                 } else {
+
+                    binding.toolbar.title = "Now Playing"
 
                     showbookmarks = false
 
