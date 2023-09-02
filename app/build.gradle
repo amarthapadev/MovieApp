@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.movielist'
+    namespace 'com.gmail.moviemaven'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.movielist"
+        applicationId "com.gmail.moviemaven"
         minSdk 24
         targetSdk 33
         versionCode 1
